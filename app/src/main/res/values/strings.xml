@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">PetShop</string>
+    <string name="product_image">Imagem do Produto</string>
+    <string name="option_delete">Excluir Produto</string>
+    <string name="option_edit">Editar Produto</string>
+    <string name="msg_error_title">Erro…</string>
+    <string name="msg_error">O aplicativo não conseguiu realizar a operação solicitada!\nMensagem: %s</string>
+
+    <string name="share_data_error_whatsapp">Erro ao compartilhar dados com o WhatsApp!\n\nPor favor, confirme que o WhatsApp esta instalado neste dispositivo.</string>
+    <string name="share_data_mail_title">PetShop - Compra Efetuada - Detalhes e Produtos</string>
+    <string name="share_data_mail_select_client">Selecione o app de e-mail desejado</string>
+    <string name="share_data_option_whatsapp">Enviar dados para WhatsApp</string>
+    <string name="share_data_option_mail">Enviar dados para E-mail</string>
+    <string name="share_data_option_generic">Escolher outra opção</string>
+    <string name="share_data_info_purchase">
+    Nº de Transação: %s \n
+    Data e Hora de Criação: %s \n
+    Data e Hora de Confirmação: %s \n
+    Valor Total R$: %s \n\n
+    Produtos Comprados \n
+    ------------------ \n
+    </string>
+
+    <string name="share_data_info_item_purchase">
+    Item: %s \n
+    Produto: %s \n
+    Quantidade: %s \n
+    Valor Unitário R$: %s \n
+    Valor R$: %s \n\n
+    </string>
+
+    <string name="bt_ok">OK</string>
+    <string name="bt_cancelar">Cancelar</string>
+    <string name="bt_retry">Tentar Novamente</string>
+    <string name="bt_compartilhar">Compartilhar</string>
+    <string name="bt_no">Não</string>
+    <string name="bt_fechar">Fechar</string>
+
+    <string name="frag_list_product_title">PetShop - Produtos</string>
+    <string name="frag_list_product_money">R$: </string>
+    <string name="frag_list_product_select_product">Selecione os Produtos Desejados</string>
+    <string name="frag_list_product_bt_purchase">Carrinho de Compra</string>
+    <string name="frag_list_product_view_shop_items">Visualizar Produtos no Carrinho</string>
+
+    <string name="frag_product_detail_title">Petshop - Detalhes do Produto</string>
+    <string name="frag_product_detail_info_prod">Informações do Produto</string>
+    <string name="frag_product_detail_info_price">Preço R$</string>
+    <string name="frag_product_detail_info_weight">Peso</string>
+    <string name="frag_product_detail_info_quantity">Qtd. Estoque</string>
+    <string name="frag_product_detail_info_increase">Incrementar Item</string>
+    <string name="frag_product_detail_info_decrease">Decrementar Item</string>
+    <string name="frag_product_detail_qtd_default">0</string>
+    <string name="frag_product_detail_add_product">Adicionar Produto</string>
+    <string name="frag_product_detail_view_shop_items">Visualizar Produtos no Carrinho</string>
+    <string name="frag_product_detail_total">Valor Total R$ %s</string>
+    <string name="frag_product_detail_erro_qtd">Quantidade inválida!\n\nInforme uma quantidade maior do que zero!</string>
+
+    <string name="frag_purchase_in_progress_title">Petshop - Carrinho de Compra</string>
+    <string name="frag_purchase_in_progress_total">Total R$ %s</string>
+    <string name="frag_purchase_in_progress_finish">Concluir Processo de Compra</string>
+    <string name="frag_purchase_in_progress_purchase_title">Dados da Compra</string>
+    <string name="frag_purchase_in_progress_purchase_id">Nº Transação</string>
+    <string name="frag_purchase_in_progress_purchase_date">Data</string>
+    <string name="frag_purchase_in_progress_selected_products">Produtos Selecionados</string>
+    <string name="frag_purchase_in_progress_money">R$: </string>
+    <string name="frag_purchase_in_progress_quantity">Qtd.: </string>
+    <string name="frag_purchase_in_progress_empty_list">Carrinho de Compra Vazio!\n\n Não existe nenhum produto selecionado para compra.</string>
+    <string name="frag_purchase_in_progress_delete_title">Exclusão</string>
+    <string name="frag_purchase_in_progress_delete_msg">Deseja realmente excluir o produto do carrinho de compra?\n\n%s</string>
+    <string name="frag_purchase_in_progress_invalid_purchase">Processo de Compra não localizado!</string>
+    <string name="frag_purchase_in_progress_finish_purchase_title">Finalizar Compra</string>
+    <string name="frag_purchase_in_progress_finish_purchase_msg">Deseja realmente efetivar esta compra?\n\n%s</string>
+    <string name="frag_purchase_in_progress_finish_success_title">Compra Finalizada!</string>
+    <string name="frag_purchase_in_progress_finish_success_msg">Compra realizada com sucesso!\n\nDeseja compartilhar as informações da compra?</string>
+
+</resources>

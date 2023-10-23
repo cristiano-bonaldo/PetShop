@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="@color/green"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="5dp"
+    card_view:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_light"
+        android:padding="10dp"
+        tools:context=".ui.fragment.ListProductFragment">
+
+        <ImageView
+            android:id="@+id/ivProd"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:contentDescription="@string/product_image"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@color/white"
+            android:contentDescription="@string/option_edit"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@color/white"
+            android:contentDescription="@string/option_delete"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/ivDelete"
+            app:layout_constraintStart_toEndOf="@id/ivProd"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Product Description" />
+
+        <TextView
+            android:id="@+id/tvInfoQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/frag_purchase_in_progress_quantity"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProd"
+            app:layout_constraintStart_toEndOf="@id/ivProd" />
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvInfoPrice"
+            app:layout_constraintStart_toEndOf="@id/tvInfoQuantity"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/tvInfoPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/frag_purchase_in_progress_money"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProd"
+            app:layout_constraintEnd_toStartOf="@id/tvPrice" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvInfoPrice"
+            app:layout_constraintEnd_toStartOf="@id/ivDelete"
+            tools:text="0.00" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#D50000</color>
+
+<!--    <color name="green">#1B5E20</color>-->
+<!--    <color name="green_dark">#003300</color>-->
+<!--    <color name="green_light">#A5D6A7</color>-->
+<!--    -->
+<!--    <color name="blue">#0288D1</color>-->
+<!--    <color name="blue_dark">#005B9F</color>-->
+<!--    <color name="blue_light">#81D4FA</color>-->
+
+    <color name="blue">#006494</color>
+    <color name="blue_dark">#13293D</color>
+    <color name="blue_light">#74A2BA</color>
+
+    <color name="green">#6BBD07</color>
+    <color name="green_dark">#1F7D35</color>
+    <color name="green_light">#99D64D</color>
+</resources>
