@@ -28,7 +28,9 @@
             app:argType="cvb.com.br.petshop.data.model.Product" />
         <action
             android:id="@+id/action_productDetailFragment_to_listPurchaseInProgressFragment"
-            app:destination="@id/listPurchaseInProgressFragment" />
+            app:destination="@id/listPurchaseInProgressFragment"
+            app:popUpTo="@id/listProductFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/listPurchaseInProgressFragment"

@@ -37,7 +37,7 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
     private val viewModel by viewModels<FragListPurchaseInProgressViewModel>()
 
-    private lateinit var editPurchaseQuantityDialog: EditPurchaseQuantityDialog
+    private var editPurchaseQuantityDialog: EditPurchaseQuantityDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -93,8 +93,8 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
     private fun openEditDialog(product: Product, itemPurchase: ItemPurchase) {
         editPurchaseQuantityDialog = EditPurchaseQuantityDialog (requireActivity(), product, itemPurchase)
-        editPurchaseQuantityDialog.setOnSaveEvent { item -> editPurchaseQuantityListener(item)  }
-        editPurchaseQuantityDialog.show()
+        editPurchaseQuantityDialog?.setOnSaveEvent { item -> editPurchaseQuantityListener(item)  }
+        editPurchaseQuantityDialog?.show()
     }
 
     private fun editPurchaseQuantityListener(itemPurchase: ItemPurchase) {
@@ -212,7 +212,7 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
         itemPurchaseAdapter.submitList(newListItemPurchase)
 
-        editPurchaseQuantityDialog.dismiss()
+        editPurchaseQuantityDialog?.dismiss()
     }
 
     private fun onFinishPurchaseStatus(crudStatus: CrudStatus) {
