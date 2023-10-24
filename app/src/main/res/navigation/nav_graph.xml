@@ -37,8 +37,5 @@
         android:name="cvb.com.br.petshop.ui.fragment.ListPurchaseInProgressFragment"
         android:label="@string/frag_purchase_in_progress_title"
         tools:layout="@layout/fragment_list_purchase_in_progress" >
-        <action
-            android:id="@+id/action_listPurchaseInProgressFragment_to_productDetailFragment"
-            app:destination="@id/productDetailFragment" />
     </fragment>
 </navigation>
