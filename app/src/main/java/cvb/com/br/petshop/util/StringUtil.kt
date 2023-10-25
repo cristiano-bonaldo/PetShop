@@ -9,7 +9,7 @@ object StringUtil {
     fun formatValue(value: Double): String {
         val locale = Locale("pt", "BR")
         val symbols = DecimalFormatSymbols(locale)
-        val pattern = "###,###,###.00"
+        val pattern = "###,###,##0.00"
 
         val decimalFormat = DecimalFormat(pattern, symbols)
 

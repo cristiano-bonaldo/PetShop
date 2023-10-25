@@ -2,9 +2,8 @@ package cvb.com.br.petshop.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -86,6 +85,7 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
     private fun setupObserver() {
         viewModel.loadItemPurchaseStatus.observe(viewLifecycleOwner, this::onLoadItemPurchaseStatus)
         viewModel.addPurchaseStatus.observe(viewLifecycleOwner, this::onAddPurchaseStatus)
+        viewModel.totalPurchase.observe(viewLifecycleOwner, this::configTotalPurchase)
     }
 
     private fun onLoadItemPurchaseStatus(loadItemPurchaseStatus: LoadItemPurchaseStatus) {
@@ -158,17 +158,17 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
         itemPurchase?.let { item -> qtd = item.quantity }
 
         binding.tvPurchaseQtd.text = qtd.toString()
-        configPurchaseTotal(qtd)
+
+        viewModel.getTotalPurchase(product, qtd)
     }
 
     private fun configPurchaseQuantity(type: Int) {
-        InformProductQuantity.process(type, binding.tvPurchaseQtd) { qtd -> configPurchaseTotal(qtd) }
+        InformProductQuantity.process(type, binding.tvPurchaseQtd) { qtd ->
+            viewModel.getTotalPurchase(product, qtd) }
     }
 
-    private fun configPurchaseTotal(qtd: Int) {
-        val tot = qtd * product.amount
-
-        binding.tvTotal.text = getString(R.string.frag_product_detail_total, StringUtil.formatValue(tot))
+    private fun configTotalPurchase(total: Double) {
+        binding.tvTotal.text = getString(R.string.frag_product_detail_total, StringUtil.formatValue(total))
     }
 
     override fun onDestroy() {

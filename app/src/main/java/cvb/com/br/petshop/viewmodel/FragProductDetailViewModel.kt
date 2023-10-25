@@ -42,6 +42,10 @@ class FragProductDetailViewModel @Inject constructor(
     val addPurchaseStatus: LiveData<CrudStatus>
         get() = mAddPurchaseStatus
 
+    private val mTotalPurchase = MutableLiveData<Double>()
+    val totalPurchase: LiveData<Double>
+        get() = mTotalPurchase
+
 
     fun loadItemPurchase(product: Product) {
         viewModelScope.launch(coroutineDispatcher) {
@@ -101,6 +105,10 @@ class FragProductDetailViewModel @Inject constructor(
                 localItemPurchaseRepository.insert(itemPurchase)
             }
         }
+    }
+
+    fun getTotalPurchase(product: Product, qtd: Int) {
+        mTotalPurchase.value = (qtd * product.amount)
     }
 
     private fun createPurchase() = Purchase(
