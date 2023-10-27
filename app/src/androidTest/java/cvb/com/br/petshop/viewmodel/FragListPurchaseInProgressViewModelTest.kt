@@ -7,6 +7,7 @@ import cvb.com.br.petshop.data.datasource.ItemPurchaseDataSourceFake
 import cvb.com.br.petshop.data.datasource.ProductDataSourceFake
 import cvb.com.br.petshop.data.datasource.PurchaseDataSourceFake
 import cvb.com.br.petshop.data.model.util.ItemPurchaseFactory
+import cvb.com.br.petshop.util.PurchaseUtil
 import cvb.com.br.petshop.util.getOrAwaitValue
 import cvb.com.br.petshop.viewmodel.status.CrudStatus
 import cvb.com.br.petshop.viewmodel.status.LoadProductStatus
@@ -42,12 +43,15 @@ class FragListPurchaseInProgressViewModelTest {
         purchaseRepositoryFake = PurchaseDataSourceFake()
         itemPurchaseRepositoryFake = ItemPurchaseDataSourceFake()
 
+        val purchaseUtil = PurchaseUtil(ApplicationProvider.getApplicationContext())
+
         viewModel = FragListPurchaseInProgressViewModel(
             ApplicationProvider.getApplicationContext(),
             UnconfinedTestDispatcher(),
             productRepositoryFake,
             purchaseRepositoryFake,
-            itemPurchaseRepositoryFake
+            itemPurchaseRepositoryFake,
+            purchaseUtil
         )
     }
 

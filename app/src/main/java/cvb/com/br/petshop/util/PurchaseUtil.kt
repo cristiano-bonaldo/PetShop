@@ -4,10 +4,14 @@ import android.content.Context
 import cvb.com.br.petshop.R
 import cvb.com.br.petshop.data.model.ItemPurchase
 import cvb.com.br.petshop.data.model.Purchase
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object PurchaseUtil {
+@Singleton
+class PurchaseUtil @Inject constructor(@ApplicationContext private val context: Context) {
 
-    fun getPurchaseFormatted(context: Context, purchase: Purchase): String {
+    fun getPurchaseFormatted(purchase: Purchase): String {
         /*
         Exemplo:
         Nº de Transação: 10050

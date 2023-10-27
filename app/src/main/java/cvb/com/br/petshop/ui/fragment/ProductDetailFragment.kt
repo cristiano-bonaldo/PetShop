@@ -28,6 +28,9 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
         private val TAG = ProductDetailFragment::class.java.simpleName
     }
 
+    @Inject
+    lateinit var dialogUtil: DialogUtil
+
     private var _binding: FragmentProductDetailBinding? = null
     private val binding: FragmentProductDetailBinding get() = _binding!!
 
@@ -69,7 +72,7 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
 
         if (qtd == 0) {
             val btOK = {}
-            DialogUtil.showErrorDialog(requireContext(), getString(R.string.frag_product_detail_erro_qtd), btOK)
+            dialogUtil.showErrorDialog(getString(R.string.frag_product_detail_erro_qtd), btOK)
             return
         }
 
@@ -111,7 +114,7 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
 
     private fun handleLoadItemPurchaseError(errorMessage: String) {
         val btRetry = { viewModel.loadItemPurchase(product) }
-        DialogUtil.showErrorRetryDialog(requireContext(), errorMessage, btRetry)
+        dialogUtil.showErrorRetryDialog(errorMessage, btRetry)
     }
 
     private fun onAddPurchaseStatus(crudStatus: CrudStatus) {
@@ -137,7 +140,7 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
 
     private fun handleCrudError(errorMessage: String) {
         val btRetry = { viewModel.execRetryEvent() }
-        DialogUtil.showErrorRetryDialog(requireContext(), errorMessage, btRetry)
+        dialogUtil.showErrorRetryDialog(errorMessage, btRetry)
     }
 
     private fun showProductData() {

@@ -34,6 +34,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     @ProductLocalRepository private val productRepository: ProductRepository,
     @PurchaseLocalRepository private val localPurchaseRepository: PurchaseRepository,
     @ItemPurchaseLocalRepository private val localItemPurchaseRepository: ItemPurchaseRepository,
+    private val purchaseUtil: PurchaseUtil
 ) : ViewModel() {
 
     companion object {
@@ -117,6 +118,8 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
         viewModelScope.launch(coroutineDispatcher) {
             try {
                 mFinishPurchaseStatus.value = CrudStatus.Loading
+
+                crudEventType = C_CRUD_EVENT_PURCHASE_UPDATE
 
                 purchaseInProgress?.let { purchase ->
 
@@ -213,7 +216,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     }
 
     private fun getTotalPurchase() {
-        val total = PurchaseUtil.getTotalPurchase(currentListItemPurchase)
+        val total = purchaseUtil.getTotalPurchase(currentListItemPurchase)
         mUpdateTotalPurchase.value = StringUtil.formatValue(total)
     }
 
@@ -221,7 +224,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
         when (crudEventType) {
             C_CRUD_EVENT_ITEM_DELETE -> deleteItemPurchase(crudItemPurchase)
             C_CRUD_EVENT_ITEM_UPDATE -> updateItemPurchase(crudItemPurchase)
-            else ->finishPurchase()
+            else -> finishPurchase()
         }
     }
 
@@ -231,7 +234,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
         purchaseInProgress?.let { purchase ->
             currentListItemPurchase?.let { listItemPurchase ->
                 purchase.listItemPurchase = listItemPurchase
-                return PurchaseUtil.getPurchaseFormatted(context, purchase)
+                return purchaseUtil.getPurchaseFormatted(purchase)
             }
         }
 

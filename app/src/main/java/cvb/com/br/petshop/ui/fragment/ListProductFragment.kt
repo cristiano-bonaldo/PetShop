@@ -21,6 +21,9 @@ import kotlin.system.exitProcess
 @AndroidEntryPoint
 class ListProductFragment @Inject constructor(private val productAdapter: ProductAdapter) : Fragment(R.layout.fragment_list_product) {
 
+    @Inject
+    lateinit var dialogUtil: DialogUtil
+
     companion object {
         private val TAG = ListProductFragment::class.java.simpleName
     }
@@ -87,7 +90,7 @@ class ListProductFragment @Inject constructor(private val productAdapter: Produc
 
                 val btRetry = { viewModel.loadProducts() }
                 val btCancel = { exitProcess(0) }
-                DialogUtil.showErrorRetryDialog(requireContext(), errorMessage, btRetry, btCancel)
+                dialogUtil.showErrorRetryDialog(errorMessage, btRetry, btCancel)
             }
 
             is LoadProductStatus.Success -> {

@@ -1,13 +1,17 @@
 package cvb.com.br.petshop.util
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import cvb.com.br.petshop.R
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
-object DataShareUtil {
+@ActivityScoped
+class DataShareUtil @Inject constructor(@ActivityContext val activity: Context, private val dialogUtil: DialogUtil) {
 
-    fun sendMessageToWhatsApp(activity: Activity, msg: String) {
+    fun sendMessageToWhatsApp(msg: String) {
         val whatsAppAppId = "com.whatsapp"
 
         val packageManager = activity.packageManager
@@ -19,14 +23,14 @@ object DataShareUtil {
 
         if (intent.resolveActivity(packageManager) == null) {
             val btOk = {}
-            DialogUtil.showErrorDialog(activity, activity.getString(R.string.share_data_error_whatsapp), btOk)
+            dialogUtil.showErrorDialog(activity.getString(R.string.share_data_error_whatsapp), btOk)
             return
         }
 
         activity.startActivity(intent)
     }
 
-    fun sendMessageToEmail(activity: Activity, msg: String) {
+    fun sendMessageToEmail(msg: String) {
         val subject = activity.getString(R.string.share_data_mail_title)
         val recipientEmail = "" // -> Ex.: "petshop@example.com"
 
@@ -60,7 +64,7 @@ object DataShareUtil {
         }
     }
 
-    fun shareData(activity: Activity, msg: String) {
+    fun shareData(msg: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, msg)

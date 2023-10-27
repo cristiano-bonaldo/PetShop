@@ -17,6 +17,7 @@ import cvb.com.br.petshop.ui.dialog.EditPurchaseQuantityDialog
 import cvb.com.br.petshop.util.DataShareUtil
 import cvb.com.br.petshop.util.DateTimeUtil
 import cvb.com.br.petshop.util.DialogUtil
+import cvb.com.br.petshop.util.PurchaseUtil
 import cvb.com.br.petshop.viewmodel.FragListPurchaseInProgressViewModel
 import cvb.com.br.petshop.viewmodel.status.CrudStatus
 import cvb.com.br.petshop.viewmodel.status.LoadPurchaseStatus
@@ -30,6 +31,12 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
     companion object {
         private val TAG = ListPurchaseInProgressFragment::class.java.simpleName
     }
+
+    @Inject
+    lateinit var dialogUtil: DialogUtil
+
+    @Inject
+    lateinit var dataShareUtil: DataShareUtil
 
     private var _binding: FragmentListPurchaseInProgressBinding? = null
     private val binding: FragmentListPurchaseInProgressBinding get() = _binding!!
@@ -61,8 +68,7 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
         val btFinish = { viewModel.finishPurchase() }
 
-        DialogUtil.showDialog(
-            requireContext(),
+        dialogUtil.showDialog(
             getString(R.string.frag_purchase_in_progress_finish_purchase_title),
             getString(R.string.frag_purchase_in_progress_finish_purchase_msg, total),
             getString(R.string.bt_ok),
@@ -80,8 +86,7 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
     private fun deleteListener(itemPurchase: ItemPurchase) {
         val btOk = { viewModel.deleteItemPurchase(itemPurchase) }
 
-        DialogUtil.showDialog(
-            requireContext(),
+        dialogUtil.showDialog(
             getString(R.string.frag_purchase_in_progress_delete_title),
             getString(R.string.frag_purchase_in_progress_delete_msg, itemPurchase.prodDesc),
             getString(R.string.bt_ok),
@@ -145,7 +150,7 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
     private fun handleLoadPurchaseError(errorMessage: String) {
         val btRetry = { viewModel.loadPurchase() }
-        DialogUtil.showErrorRetryDialog(requireContext(), errorMessage, btRetry)
+        dialogUtil.showErrorRetryDialog(errorMessage, btRetry)
     }
 
     private fun handleLoadPurchaseSuccess(listPurchase: List<Purchase?>) {
@@ -198,7 +203,7 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
     private fun handleCrudError(errorMessage: String) {
         val btRetry = { viewModel.execRetryEvent() }
-        DialogUtil.showErrorRetryDialog(requireContext(), errorMessage, btRetry)
+        dialogUtil.showErrorRetryDialog(errorMessage, btRetry)
     }
 
     private fun handleCrudSuccess() {
@@ -240,15 +245,15 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
         val optionChoice: ((Int) -> Unit) = { selectedOption ->
             when (selectedOption) {
-                0 -> DataShareUtil.sendMessageToWhatsApp(requireActivity(), purchaseInfo)
-                1 -> DataShareUtil.sendMessageToEmail(requireActivity(), purchaseInfo)
-                else -> DataShareUtil.shareData(requireActivity(), purchaseInfo)
+                0 -> dataShareUtil.sendMessageToWhatsApp(purchaseInfo)
+                1 -> dataShareUtil.sendMessageToEmail(purchaseInfo)
+                else -> dataShareUtil.shareData(purchaseInfo)
             }
         }
 
         val btClose: (() -> Unit)  = { findNavController().popBackStack() }
 
-        DialogUtil.showDataShareDialog(requireActivity(), optionChoice, btClose)
+        dialogUtil.showDataShareDialog(optionChoice, btClose)
     }
 
     override fun onDestroy() {

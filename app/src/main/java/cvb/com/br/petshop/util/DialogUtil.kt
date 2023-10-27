@@ -3,16 +3,20 @@ package cvb.com.br.petshop.util
 import android.app.AlertDialog
 import android.content.Context
 import cvb.com.br.petshop.R
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
-object DialogUtil {
+@ActivityScoped
+class DialogUtil @Inject constructor(@ActivityContext private val activity: Context) {
 
-    fun showDialog(context: Context, title: String, message: String,
+    fun showDialog(title: String, message: String,
                    btPositiveTitle: String,
                    btPositiveEvent: (() -> Unit)?,
                    btNegativeTitle: String,
                    btNegativeEvent: (() -> Unit)?) {
 
-        val builder = AlertDialog.Builder(context)
+        val builder = AlertDialog.Builder(activity)
         builder.setCancelable(false)
         builder.setIcon(R.mipmap.ic_launcher)
         builder.setTitle(title)
@@ -25,12 +29,12 @@ object DialogUtil {
         builder.show()
     }
 
-    fun showErrorRetryDialog(context: Context, errorMessage: String, btRetryEvent: (() -> Unit), btCancelEvent: (() -> Unit)? = null) {
-        val builder = AlertDialog.Builder(context)
+    fun showErrorRetryDialog(errorMessage: String, btRetryEvent: (() -> Unit), btCancelEvent: (() -> Unit)? = null) {
+        val builder = AlertDialog.Builder(activity)
         builder.setCancelable(false)
         builder.setIcon(R.drawable.ic_error)
-        builder.setTitle(context.getString(R.string.msg_error_title))
-        builder.setMessage(context.getString(R.string.msg_error, errorMessage))
+        builder.setTitle(activity.getString(R.string.msg_error_title))
+        builder.setMessage(activity.getString(R.string.msg_error, errorMessage))
 
         builder.setPositiveButton(R.string.bt_retry) { _, _ -> btRetryEvent.invoke() }
 
@@ -39,11 +43,11 @@ object DialogUtil {
         builder.show()
     }
 
-    fun showErrorDialog(context: Context, errorMessage: String, btOkEvent: (() -> Unit)) {
-        val builder = AlertDialog.Builder(context)
+    fun showErrorDialog(errorMessage: String, btOkEvent: (() -> Unit)) {
+        val builder = AlertDialog.Builder(activity)
         builder.setCancelable(false)
         builder.setIcon(R.drawable.ic_error)
-        builder.setTitle(context.getString(R.string.msg_error_title))
+        builder.setTitle(activity.getString(R.string.msg_error_title))
         builder.setMessage(errorMessage)
 
         builder.setPositiveButton(R.string.bt_ok) { _, _ -> btOkEvent.invoke() }
@@ -51,17 +55,17 @@ object DialogUtil {
         builder.show()
     }
 
-    fun showDataShareDialog(context: Context, selectOptionListener: ((Int) -> Unit), btCloseListener: (() -> Unit)) {
+    fun showDataShareDialog(selectOptionListener: ((Int) -> Unit), btCloseListener: (() -> Unit)) {
         val optionList = arrayOf(
-            context.getString(R.string.share_data_option_whatsapp),
-            context.getString(R.string.share_data_option_mail),
-            context.getString(R.string.share_data_option_generic)
+            activity.getString(R.string.share_data_option_whatsapp),
+            activity.getString(R.string.share_data_option_mail),
+            activity.getString(R.string.share_data_option_generic)
         )
 
-        val builder = AlertDialog.Builder(context)
+        val builder = AlertDialog.Builder(activity)
         builder.setCancelable(false)
         builder.setIcon(R.mipmap.ic_launcher)
-        builder.setTitle(context.getString(R.string.frag_purchase_in_progress_finish_success_title))
+        builder.setTitle(activity.getString(R.string.frag_purchase_in_progress_finish_success_title))
         builder.setSingleChoiceItems(optionList, -1) { dialogInterface, option ->
             selectOptionListener.invoke(option)
             // dialogInterface.dismiss()
