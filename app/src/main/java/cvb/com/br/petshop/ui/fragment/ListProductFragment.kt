@@ -5,15 +5,13 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cvb.com.br.petshop.R
 import cvb.com.br.petshop.data.model.Product
 import cvb.com.br.petshop.databinding.FragmentListProductBinding
 import cvb.com.br.petshop.ui.adapter.ProductAdapter
-import cvb.com.br.petshop.util.Constants
 import cvb.com.br.petshop.util.DialogUtil
-import cvb.com.br.petshop.util.StringUtil
 import cvb.com.br.petshop.viewmodel.FragListProductViewModel
 import cvb.com.br.petshop.viewmodel.status.LoadProductStatus
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,12 +50,12 @@ class ListProductFragment @Inject constructor(private val productAdapter: Produc
 
     private fun navigateToProductDetail(product: Product) {
         val navTo = ListProductFragmentDirections.actionListProductFragmentToProductDetailFragment(product)
-        findNavController(this).navigate(navTo)
+        findNavController().navigate(navTo)
     }
 
     private fun navigateToPurchaseInProgress() {
         val navTo = ListProductFragmentDirections.actionListProductFragmentToListPurchaseInProgressFragment()
-        findNavController(this).navigate(navTo)
+        findNavController().navigate(navTo)
     }
 
     private fun setupRecycler() {

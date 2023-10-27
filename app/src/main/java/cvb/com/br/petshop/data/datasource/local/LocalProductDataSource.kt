@@ -2,8 +2,8 @@ package cvb.com.br.petshop.data.datasource.local
 
 import cvb.com.br.petshop.data.model.Product
 import cvb.com.br.petshop.data.repository.ProductRepository
-import cvb.com.br.petshop.util.converter.ProductConverter.toEntityProduct
-import cvb.com.br.petshop.util.converter.ProductConverter.toProduct
+import cvb.com.br.petshop.util.extension.ProductConverter.toEntityProduct
+import cvb.com.br.petshop.util.extension.ProductConverter.toProduct
 import cvb.com.br.petshop.db.dao.ProductDao
 import javax.inject.Inject
 

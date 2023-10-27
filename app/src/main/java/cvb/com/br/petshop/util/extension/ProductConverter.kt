@@ -1,4 +1,4 @@
-package cvb.com.br.petshop.util.converter
+package cvb.com.br.petshop.util.extension
 
 import cvb.com.br.petshop.data.model.Product
 import cvb.com.br.petshop.db.entity.EntityProduct

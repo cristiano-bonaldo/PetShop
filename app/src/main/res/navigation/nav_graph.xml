@@ -13,10 +13,18 @@
         tools:layout="@layout/fragment_list_product">
         <action
             android:id="@+id/action_listProductFragment_to_productDetailFragment"
-            app:destination="@id/productDetailFragment" />
+            app:destination="@id/productDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_listProductFragment_to_listPurchaseInProgressFragment"
-            app:destination="@id/listPurchaseInProgressFragment" />
+            app:destination="@id/listPurchaseInProgressFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -29,6 +37,10 @@
         <action
             android:id="@+id/action_productDetailFragment_to_listPurchaseInProgressFragment"
             app:destination="@id/listPurchaseInProgressFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/listProductFragment"
             app:popUpToInclusive="false" />
     </fragment>
@@ -36,6 +48,5 @@
         android:id="@+id/listPurchaseInProgressFragment"
         android:name="cvb.com.br.petshop.ui.fragment.ListPurchaseInProgressFragment"
         android:label="@string/frag_purchase_in_progress_title"
-        tools:layout="@layout/fragment_list_purchase_in_progress" >
-    </fragment>
+        tools:layout="@layout/fragment_list_purchase_in_progress"></fragment>
 </navigation>

@@ -3,8 +3,8 @@ package cvb.com.br.petshop.data.datasource.local
 import cvb.com.br.petshop.data.model.ItemPurchase
 import cvb.com.br.petshop.data.repository.ItemPurchaseRepository
 import cvb.com.br.petshop.db.dao.ItemPurchaseDao
-import cvb.com.br.petshop.util.converter.ItemPurchaseConverter.toEntityItemPurchase
-import cvb.com.br.petshop.util.converter.ItemPurchaseConverter.toItemPurchase
+import cvb.com.br.petshop.util.extension.ItemPurchaseConverter.toEntityItemPurchase
+import cvb.com.br.petshop.util.extension.ItemPurchaseConverter.toItemPurchase
 import javax.inject.Inject
 
 class LocalItemPurchaseDataSource @Inject constructor(private val itemPurchaseDao: ItemPurchaseDao) :

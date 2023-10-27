@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.RequestManager
@@ -79,7 +78,7 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
 
     private fun viewPurchaseListener() {
         val navTo = ProductDetailFragmentDirections.actionProductDetailFragmentToListPurchaseInProgressFragment()
-        NavHostFragment.findNavController(this).navigate(navTo)
+        findNavController().navigate(navTo)
     }
 
     private fun setupObserver() {

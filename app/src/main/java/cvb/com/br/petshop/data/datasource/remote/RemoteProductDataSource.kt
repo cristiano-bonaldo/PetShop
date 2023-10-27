@@ -4,7 +4,7 @@ import cvb.com.br.petshop.data.model.Product
 import cvb.com.br.petshop.data.repository.ProductRepository
 import cvb.com.br.petshop.network.service.ApiService
 import cvb.com.br.petshop.network.util.ApiHandleDataResult
-import cvb.com.br.petshop.util.converter.ProductConverter.toProduct
+import cvb.com.br.petshop.util.extension.ProductConverter.toProduct
 import javax.inject.Inject
 
 class RemoteProductDataSource @Inject constructor(private val apiService: ApiService) : ProductRepository {
