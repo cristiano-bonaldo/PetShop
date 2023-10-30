@@ -13,15 +13,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import cvb.com.br.petshop.R
 import cvb.com.br.petshop.databinding.ActivityMainBinding
-import cvb.com.br.petshop.ui.fragment.PetShopFragmentFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var petshopFragmentFactory: PetShopFragmentFactory
 
     private lateinit var binding: ActivityMainBinding
 
@@ -30,8 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        supportFragmentManager.fragmentFactory = petshopFragmentFactory
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

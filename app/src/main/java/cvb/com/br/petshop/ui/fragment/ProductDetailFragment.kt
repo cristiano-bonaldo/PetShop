@@ -22,7 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProductDetailFragment @Inject constructor(private val glide: RequestManager) : Fragment(R.layout.fragment_product_detail) {
+class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
+//class ProductDetailFragment @Inject constructor(private val glide: RequestManager) : Fragment(R.layout.fragment_product_detail) {
 
     companion object {
         private val TAG = ProductDetailFragment::class.java.simpleName
@@ -30,6 +31,9 @@ class ProductDetailFragment @Inject constructor(private val glide: RequestManage
 
     @Inject
     lateinit var dialogUtil: DialogUtil
+
+    @Inject
+    lateinit var glide: RequestManager
 
     private var _binding: FragmentProductDetailBinding? = null
     private val binding: FragmentProductDetailBinding get() = _binding!!

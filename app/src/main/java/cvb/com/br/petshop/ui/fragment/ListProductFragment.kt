@@ -19,10 +19,14 @@ import javax.inject.Inject
 import kotlin.system.exitProcess
 
 @AndroidEntryPoint
-class ListProductFragment @Inject constructor(private val productAdapter: ProductAdapter) : Fragment(R.layout.fragment_list_product) {
+//class ListProductFragment @Inject constructor(private val productAdapter: ProductAdapter) : Fragment(R.layout.fragment_list_product) {
+class ListProductFragment : Fragment(R.layout.fragment_list_product) {
 
     @Inject
     lateinit var dialogUtil: DialogUtil
+
+    @Inject
+    lateinit var productAdapter: ProductAdapter
 
     companion object {
         private val TAG = ListProductFragment::class.java.simpleName

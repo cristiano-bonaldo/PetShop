@@ -25,8 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchaseAdapter: ItemPurchaseAdapter)
-    : Fragment(R.layout.fragment_list_purchase_in_progress) {
+class ListPurchaseInProgressFragment : Fragment(R.layout.fragment_list_purchase_in_progress) {
 
     companion object {
         private val TAG = ListPurchaseInProgressFragment::class.java.simpleName
@@ -37,6 +36,9 @@ class ListPurchaseInProgressFragment @Inject constructor(private val itemPurchas
 
     @Inject
     lateinit var dataShareUtil: DataShareUtil
+
+    @Inject
+    lateinit var itemPurchaseAdapter: ItemPurchaseAdapter
 
     private var _binding: FragmentListPurchaseInProgressBinding? = null
     private val binding: FragmentListPurchaseInProgressBinding get() = _binding!!
