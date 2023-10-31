@@ -1,17 +1,14 @@
 package cvb.com.br.petshop.data.datasource.remote
 
-import cvb.com.br.petshop.data.model.Product
-import cvb.com.br.petshop.data.repository.ProductRepository
-import cvb.com.br.petshop.network.service.ApiService
-import cvb.com.br.petshop.network.util.ApiHandleDataResult
+import cvb.com.br.petshop.data.network.service.ApiService
+import cvb.com.br.petshop.data.network.util.ApiHandleDataResult
+import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.util.extension.ProductConverter.toProduct
 import javax.inject.Inject
 
-class RemoteProductDataSource @Inject constructor(private val apiService: ApiService) : ProductRepository {
+class RemoteProductDataSource @Inject constructor(private val apiService: ApiService) {
 
-    override suspend fun insert(product: Product) { }
-
-    override suspend fun getAll(): List<Product> {
+    suspend fun getAll(): List<Product> {
         /*
         Finalidade de Teste
         No inicio da implmentação, o servidor estava apresentando 2 problemas:

@@ -1,7 +1,7 @@
 package cvb.com.br.petshop.util.extension
 
-import cvb.com.br.petshop.data.model.ItemPurchase
-import cvb.com.br.petshop.db.entity.EntityItemPurchase
+import cvb.com.br.petshop.domain.model.ItemPurchase
+import cvb.com.br.petshop.data.db.entity.EntityItemPurchase
 
 object ItemPurchaseConverter {
 

@@ -1,9 +1,9 @@
 package cvb.com.br.petshop.viewmodel.data.datasource
 
-import cvb.com.br.petshop.data.model.ItemPurchase
-import cvb.com.br.petshop.data.model.Purchase
-import cvb.com.br.petshop.data.repository.ItemPurchaseRepository
-import cvb.com.br.petshop.data.repository.PurchaseRepository
+import cvb.com.br.petshop.domain.model.ItemPurchase
+import cvb.com.br.petshop.domain.model.Purchase
+import cvb.com.br.petshop.domain.repository.ItemPurchaseRepository
+import cvb.com.br.petshop.domain.repository.PurchaseRepository
 
 class ItemPurchaseDataSourceFake : ItemPurchaseRepository {
 

@@ -2,8 +2,8 @@ package cvb.com.br.petshop.util
 
 import android.content.Context
 import cvb.com.br.petshop.R
-import cvb.com.br.petshop.data.model.ItemPurchase
-import cvb.com.br.petshop.data.model.Purchase
+import cvb.com.br.petshop.domain.model.ItemPurchase
+import cvb.com.br.petshop.domain.model.Purchase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

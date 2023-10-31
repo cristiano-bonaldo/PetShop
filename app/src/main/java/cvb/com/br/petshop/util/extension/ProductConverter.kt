@@ -1,8 +1,8 @@
 package cvb.com.br.petshop.util.extension
 
-import cvb.com.br.petshop.data.model.Product
-import cvb.com.br.petshop.db.entity.EntityProduct
-import cvb.com.br.petshop.network.model.ApiProduct
+import cvb.com.br.petshop.domain.model.Product
+import cvb.com.br.petshop.data.db.entity.EntityProduct
+import cvb.com.br.petshop.data.network.model.ApiProduct
 
 object ProductConverter {
 

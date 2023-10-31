@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:layout_width="300dp"
     android:layout_height="320dp"
-    tools:context=".ui.fragment.ListProductFragment">
+    tools:context=".presentation.ui.fragment.ListProductFragment">
 
     <TextView
         android:id="@+id/tvDesc"

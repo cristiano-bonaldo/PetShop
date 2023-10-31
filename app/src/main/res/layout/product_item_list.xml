@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@color/blue_light"
         android:padding="10dp"
-        tools:context=".ui.fragment.ListProductFragment">
+        tools:context=".presentation.ui.fragment.ListProductFragment">
 
         <ImageView
             android:id="@+id/ivProd"

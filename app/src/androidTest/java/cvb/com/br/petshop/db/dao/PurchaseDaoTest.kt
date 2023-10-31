@@ -6,8 +6,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import cvb.com.br.petshop.data.enum.PurchaseStatusEnum
-import cvb.com.br.petshop.db.AppDataBase
+import cvb.com.br.petshop.domain.enum.PurchaseStatusEnum
+import cvb.com.br.petshop.data.db.AppDataBase
+import cvb.com.br.petshop.data.db.dao.PurchaseDao
 import cvb.com.br.petshop.db.dao.util.EntityPurchaseFactory
 import kotlinx.coroutines.test.runTest
 import org.junit.After

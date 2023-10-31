@@ -2,8 +2,9 @@ package cvb.com.br.petshop.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
+import cvb.com.br.petshop.presentation.viewmodel.FragListProductViewModel
 import cvb.com.br.petshop.viewmodel.data.datasource.ProductDataSourceFake
-import cvb.com.br.petshop.viewmodel.status.LoadProductStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.LoadProductStatus
 import cvb.com.br.petshop.viewmodel.util.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

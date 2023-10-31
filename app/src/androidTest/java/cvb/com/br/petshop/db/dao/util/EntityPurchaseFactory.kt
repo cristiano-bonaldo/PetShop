@@ -1,7 +1,7 @@
 package cvb.com.br.petshop.db.dao.util
 
-import cvb.com.br.petshop.data.enum.PurchaseStatusEnum
-import cvb.com.br.petshop.db.entity.EntityPurchase
+import cvb.com.br.petshop.domain.enum.PurchaseStatusEnum
+import cvb.com.br.petshop.data.db.entity.EntityPurchase
 
 object EntityPurchaseFactory {
 

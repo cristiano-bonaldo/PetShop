@@ -1,6 +1,6 @@
 package cvb.com.br.petshop.viewmodel.util
 
-import cvb.com.br.petshop.data.model.Product
+import cvb.com.br.petshop.domain.model.Product
 
 object ProductFactory {
 

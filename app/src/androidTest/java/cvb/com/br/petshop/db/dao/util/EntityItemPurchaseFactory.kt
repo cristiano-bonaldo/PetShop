@@ -1,6 +1,6 @@
 package cvb.com.br.petshop.db.dao.util
 
-import cvb.com.br.petshop.db.entity.EntityItemPurchase
+import cvb.com.br.petshop.data.db.entity.EntityItemPurchase
 
 object EntityItemPurchaseFactory {
 

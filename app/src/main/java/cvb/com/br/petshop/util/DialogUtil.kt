@@ -66,9 +66,12 @@ class DialogUtil @Inject constructor(@ActivityContext private val activity: Cont
         builder.setCancelable(false)
         builder.setIcon(R.mipmap.ic_launcher)
         builder.setTitle(activity.getString(R.string.frag_purchase_in_progress_finish_success_title))
-        builder.setSingleChoiceItems(optionList, -1) { dialogInterface, option ->
+        builder.setSingleChoiceItems(optionList, -1) { _, option ->
             selectOptionListener.invoke(option)
-            // dialogInterface.dismiss()
+            /*
+            1º parameter ('_') = dialogInterface
+            dialogInterface.dismiss()
+            */
         }
         builder.setPositiveButton(R.string.bt_fechar) { _, _ -> btCloseListener.invoke()}
         builder.show()

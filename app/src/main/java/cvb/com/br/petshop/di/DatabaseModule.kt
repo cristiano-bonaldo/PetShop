@@ -5,13 +5,17 @@ import androidx.room.Room
 import cvb.com.br.petshop.data.datasource.local.LocalItemPurchaseDataSource
 import cvb.com.br.petshop.data.datasource.local.LocalProductDataSource
 import cvb.com.br.petshop.data.datasource.local.LocalPurchaseDataSource
-import cvb.com.br.petshop.data.repository.ItemPurchaseRepository
-import cvb.com.br.petshop.data.repository.ProductRepository
-import cvb.com.br.petshop.data.repository.PurchaseRepository
-import cvb.com.br.petshop.db.AppDataBase
-import cvb.com.br.petshop.db.dao.ItemPurchaseDao
-import cvb.com.br.petshop.db.dao.ProductDao
-import cvb.com.br.petshop.db.dao.PurchaseDao
+import cvb.com.br.petshop.data.datasource.remote.RemoteProductDataSource
+import cvb.com.br.petshop.data.db.AppDataBase
+import cvb.com.br.petshop.data.db.dao.ItemPurchaseDao
+import cvb.com.br.petshop.data.db.dao.ProductDao
+import cvb.com.br.petshop.data.db.dao.PurchaseDao
+import cvb.com.br.petshop.data.repository.ItemPurchaseRepositoryImpl
+import cvb.com.br.petshop.data.repository.ProductRepositoryImpl
+import cvb.com.br.petshop.data.repository.PurchaseRepositoryImpl
+import cvb.com.br.petshop.domain.repository.ItemPurchaseRepository
+import cvb.com.br.petshop.domain.repository.ProductRepository
+import cvb.com.br.petshop.domain.repository.PurchaseRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,33 +57,39 @@ object DatabaseModule {
 
     //==============
 
-    @ProductLocalRepository
+    @ProductRepositoryImplementation
     @Singleton
     @Provides
-    fun providesLocalProductDataSource(productDao: ProductDao): ProductRepository = LocalProductDataSource(productDao)
+    fun providesProductRepositoryImpl(
+        remoteProductDataSource: RemoteProductDataSource,
+        localProductDataSource: LocalProductDataSource,
+    ): ProductRepository =
+        ProductRepositoryImpl(remoteProductDataSource, localProductDataSource)
 
-    @PurchaseLocalRepository
+    @PurchaseRepositoryImplementation
     @Singleton
     @Provides
-    fun providesLocalPurchaseDataSource(purchaseDao: PurchaseDao): PurchaseRepository = LocalPurchaseDataSource(purchaseDao)
+    fun providesPurchaseRepositoryImpl(localPurchaseDataSource: LocalPurchaseDataSource): PurchaseRepository =
+        PurchaseRepositoryImpl(localPurchaseDataSource)
 
-    @ItemPurchaseLocalRepository
+    @ItemPurchaseRepositoryImplementation
     @Singleton
     @Provides
-    fun providesLocalItemPurchaseDataSource(itemPurchaseDao: ItemPurchaseDao): ItemPurchaseRepository = LocalItemPurchaseDataSource(itemPurchaseDao)
+    fun providesItemPurchaseRepositoryImpl(localItemPurchaseDataSource: LocalItemPurchaseDataSource): ItemPurchaseRepository =
+        ItemPurchaseRepositoryImpl(localItemPurchaseDataSource)
 }
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ProductLocalRepository
+annotation class ProductRepositoryImplementation
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class PurchaseLocalRepository
+annotation class PurchaseRepositoryImplementation
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ItemPurchaseLocalRepository
+annotation class ItemPurchaseRepositoryImplementation
 
 
 

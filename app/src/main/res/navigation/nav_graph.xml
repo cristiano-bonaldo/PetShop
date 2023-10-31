@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/listProductFragment"
-        android:name="cvb.com.br.petshop.ui.fragment.ListProductFragment"
+        android:name="cvb.com.br.petshop.presentation.ui.fragment.ListProductFragment"
         android:label="@string/frag_list_product_title"
         tools:layout="@layout/fragment_list_product">
         <action
@@ -28,12 +28,12 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="cvb.com.br.petshop.ui.fragment.ProductDetailFragment"
+        android:name="cvb.com.br.petshop.presentation.ui.fragment.ProductDetailFragment"
         android:label="@string/frag_product_detail_title"
         tools:layout="@layout/fragment_product_detail">
         <argument
             android:name="PRODUCT"
-            app:argType="cvb.com.br.petshop.data.model.Product" />
+            app:argType="cvb.com.br.petshop.domain.model.Product" />
         <action
             android:id="@+id/action_productDetailFragment_to_listPurchaseInProgressFragment"
             app:destination="@id/listPurchaseInProgressFragment"
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/listPurchaseInProgressFragment"
-        android:name="cvb.com.br.petshop.ui.fragment.ListPurchaseInProgressFragment"
+        android:name="cvb.com.br.petshop.presentation.ui.fragment.ListPurchaseInProgressFragment"
         android:label="@string/frag_purchase_in_progress_title"
         tools:layout="@layout/fragment_list_purchase_in_progress"></fragment>
 </navigation>

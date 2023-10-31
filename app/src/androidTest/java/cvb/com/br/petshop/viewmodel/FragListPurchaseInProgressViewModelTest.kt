@@ -7,11 +7,12 @@ import cvb.com.br.petshop.data.datasource.ItemPurchaseDataSourceFake
 import cvb.com.br.petshop.data.datasource.ProductDataSourceFake
 import cvb.com.br.petshop.data.datasource.PurchaseDataSourceFake
 import cvb.com.br.petshop.data.model.util.ItemPurchaseFactory
+import cvb.com.br.petshop.presentation.viewmodel.FragListPurchaseInProgressViewModel
 import cvb.com.br.petshop.util.PurchaseUtil
 import cvb.com.br.petshop.util.getOrAwaitValue
-import cvb.com.br.petshop.viewmodel.status.CrudStatus
-import cvb.com.br.petshop.viewmodel.status.LoadProductStatus
-import cvb.com.br.petshop.viewmodel.status.LoadPurchaseStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.CrudStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.LoadProductStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.LoadPurchaseStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
