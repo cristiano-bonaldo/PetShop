@@ -15,8 +15,7 @@ import cvb.com.br.petshop.domain.model.Purchase
 import cvb.com.br.petshop.presentation.ui.adapter.ItemPurchaseAdapter
 import cvb.com.br.petshop.presentation.ui.dialog.EditPurchaseQuantityDialog
 import cvb.com.br.petshop.presentation.viewmodel.FragListPurchaseInProgressViewModel
-import cvb.com.br.petshop.presentation.viewmodel.status.CrudStatus
-import cvb.com.br.petshop.presentation.viewmodel.status.LoadPurchaseStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
 import cvb.com.br.petshop.util.DataShareUtil
 import cvb.com.br.petshop.util.DateTimeUtil
 import cvb.com.br.petshop.util.DialogUtil
@@ -131,20 +130,22 @@ class ListPurchaseInProgressFragment : Fragment(R.layout.fragment_list_purchase_
         binding.tvPurchaseDate.text = DateTimeUtil.convertTimeMillisToString(purchase.createAt)
     }
 
-    private fun onLoadPurchaseStatus(loadPurchaseStatus: LoadPurchaseStatus) {
+    private fun onLoadPurchaseStatus(loadPurchaseStatus: UIStatus<List<Purchase?>>) {
         when (loadPurchaseStatus) {
-            is LoadPurchaseStatus.Loading -> {
+            is UIStatus.Loading -> {
                 Log.i(TAG, "onLoadPurchaseStatus::Status=Loading")
             }
 
-            is LoadPurchaseStatus.Error -> {
+            is UIStatus.Error -> {
                 val errorMessage = loadPurchaseStatus.error.message ?: "-"
                 Log.i(TAG, "onLoadPurchaseStatus::Status=Success Message: $errorMessage")
                 handleLoadPurchaseError(errorMessage) }
 
-            is LoadPurchaseStatus.Success -> {
+            is UIStatus.Success -> {
                 Log.i(TAG, "onLoadPurchaseStatus::Status=Success")
-                handleLoadPurchaseSuccess(loadPurchaseStatus.listPurchase)
+                loadPurchaseStatus.result?.let { list ->
+                    handleLoadPurchaseSuccess(list)
+                }
             }
         }
     }
@@ -181,20 +182,20 @@ class ListPurchaseInProgressFragment : Fragment(R.layout.fragment_list_purchase_
         binding.tvTotal.text = getString(R.string.frag_purchase_in_progress_total, total)
     }
 
-    private fun onUpdateOrDeletePurchaseStatus(crudStatus: CrudStatus) {
+    private fun onUpdateOrDeletePurchaseStatus(crudStatus: UIStatus<Nothing>) {
         when (crudStatus) {
-            is CrudStatus.Loading -> {
+            is UIStatus.Loading -> {
                 Log.i(TAG, "onUpdateOrDeletePurchaseStatus::Status=Loading")
             }
 
-            is CrudStatus.Error -> {
+            is UIStatus.Error -> {
                 val errorMessage = crudStatus.error.message ?: "-"
                 Log.i(TAG, "onUpdateOrDeletePurchaseStatus::Status=Error Message: $errorMessage")
 
                 handleCrudError(errorMessage)
             }
 
-            is CrudStatus.Success -> {
+            is UIStatus.Success -> {
                 Log.i(TAG, "onUpdateOrDeletePurchaseStatus::Status=Success")
 
                 handleCrudSuccess()
@@ -220,20 +221,20 @@ class ListPurchaseInProgressFragment : Fragment(R.layout.fragment_list_purchase_
         editPurchaseQuantityDialog?.dismiss()
     }
 
-    private fun onFinishPurchaseStatus(crudStatus: CrudStatus) {
-        when (crudStatus) {
-            is CrudStatus.Loading -> {
+    private fun onFinishPurchaseStatus(uiStatus: UIStatus<Nothing>) {
+        when (uiStatus) {
+            is UIStatus.Loading -> {
                 Log.i(TAG, "onFinishPurchaseStatus::Status=Loading")
             }
 
-            is CrudStatus.Error -> {
-                val errorMessage = crudStatus.error.message ?: "-"
+            is UIStatus.Error -> {
+                val errorMessage = uiStatus.error.message ?: "-"
                 Log.i(TAG, "onFinishPurchaseStatus::Status=Error Message: $errorMessage")
 
                 handleCrudError(errorMessage)
             }
 
-            is CrudStatus.Success -> {
+            is UIStatus.Success -> {
                 Log.i(TAG, "onFinishPurchaseStatus::Status=Success")
 
                 handleFinishPurchaseSuccess()

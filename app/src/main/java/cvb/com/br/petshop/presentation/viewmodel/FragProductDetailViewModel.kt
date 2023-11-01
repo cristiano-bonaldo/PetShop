@@ -10,8 +10,7 @@ import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.domain.model.Purchase
 import cvb.com.br.petshop.domain.usecase.ItemPurchaseUseCase
 import cvb.com.br.petshop.domain.usecase.PurchaseUseCase
-import cvb.com.br.petshop.presentation.viewmodel.status.CrudStatus
-import cvb.com.br.petshop.presentation.viewmodel.status.LoadItemPurchaseStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -31,31 +30,30 @@ class FragProductDetailViewModel @Inject constructor(
     private lateinit var prodForRetry: Product
     private var qtdForRetry: Int = 0
 
-    private val mLoadItemPurchaseStatus = MutableLiveData<LoadItemPurchaseStatus>()
-    val loadItemPurchaseStatus: LiveData<LoadItemPurchaseStatus>
+    private val mLoadItemPurchaseStatus = MutableLiveData<UIStatus<ItemPurchase>>()
+    val loadItemPurchaseStatus: LiveData<UIStatus<ItemPurchase>>
         get() = mLoadItemPurchaseStatus
 
-    private val mAddPurchaseStatus = MutableLiveData<CrudStatus>()
-    val addPurchaseStatus: LiveData<CrudStatus>
+    private val mAddPurchaseStatus = MutableLiveData<UIStatus<Nothing>>()
+    val addPurchaseStatus: LiveData<UIStatus<Nothing>>
         get() = mAddPurchaseStatus
 
     private val mTotalPurchase = MutableLiveData<Double>()
     val totalPurchase: LiveData<Double>
         get() = mTotalPurchase
 
-
     fun loadItemPurchase(product: Product) {
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                mLoadItemPurchaseStatus.value = LoadItemPurchaseStatus.Loading
+                mLoadItemPurchaseStatus.value = UIStatus.Loading
 
                 purchaseInProgress = purchaseUseCase.getPurchaseInProgress()
 
                 currentItemPurchase = getItemPurchase(product.id)
 
-                mLoadItemPurchaseStatus.value = LoadItemPurchaseStatus.Success(currentItemPurchase)
+                mLoadItemPurchaseStatus.value = UIStatus.Success(currentItemPurchase)
             } catch (error: Throwable) {
-                mLoadItemPurchaseStatus.value = LoadItemPurchaseStatus.Error(error)
+                mLoadItemPurchaseStatus.value = UIStatus.Error(error)
             }
         }
     }
@@ -72,13 +70,13 @@ class FragProductDetailViewModel @Inject constructor(
     fun addItemPurchase(product: Product, quantityRequested: Int) {
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                mAddPurchaseStatus.value = CrudStatus.Loading
+                mAddPurchaseStatus.value = UIStatus.Loading
 
                 handlePurchaseProcess(product, quantityRequested)
 
-                mAddPurchaseStatus.value = CrudStatus.Success
+                mAddPurchaseStatus.value = UIStatus.Success(null)
             } catch (error: Throwable) {
-                mAddPurchaseStatus.value = CrudStatus.Error(error)
+                mAddPurchaseStatus.value = UIStatus.Error(error)
             }
         }
     }

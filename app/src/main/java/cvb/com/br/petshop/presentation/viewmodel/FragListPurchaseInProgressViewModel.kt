@@ -13,8 +13,7 @@ import cvb.com.br.petshop.domain.model.Purchase
 import cvb.com.br.petshop.domain.usecase.ItemPurchaseUseCase
 import cvb.com.br.petshop.domain.usecase.ProductUseCase
 import cvb.com.br.petshop.domain.usecase.PurchaseUseCase
-import cvb.com.br.petshop.presentation.viewmodel.status.CrudStatus
-import cvb.com.br.petshop.presentation.viewmodel.status.LoadPurchaseStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
 import cvb.com.br.petshop.util.PurchaseUtil
 import cvb.com.br.petshop.util.StringUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,20 +46,20 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     private var purchaseInProgress: Purchase? = null
     private var currentListItemPurchase: List<ItemPurchase>? = null
 
-    private val mLoadPurchaseStatus = MutableLiveData<LoadPurchaseStatus>()
-    val loadPurchaseStatus: LiveData<LoadPurchaseStatus>
+    private val mLoadPurchaseStatus = MutableLiveData<UIStatus<List<Purchase?>>>()
+    val loadPurchaseStatus: LiveData<UIStatus<List<Purchase?>>>
         get() = mLoadPurchaseStatus
 
-    private val mUpdateItemPurchaseStatus = MutableLiveData<CrudStatus>()
-    val updateItemPurchaseStatus: LiveData<CrudStatus>
+    private val mUpdateItemPurchaseStatus = MutableLiveData<UIStatus<Nothing>>()
+    val updateItemPurchaseStatus: LiveData<UIStatus<Nothing>>
         get() = mUpdateItemPurchaseStatus
 
-    private val mDeleteItemPurchaseStatus = MutableLiveData<CrudStatus>()
-    val deleteItemPurchaseStatus: LiveData<CrudStatus>
+    private val mDeleteItemPurchaseStatus = MutableLiveData<UIStatus<Nothing>>()
+    val deleteItemPurchaseStatus: LiveData<UIStatus<Nothing>>
         get() = mDeleteItemPurchaseStatus
 
-    private val mFinishPurchaseStatus = MutableLiveData<CrudStatus>()
-    val finishPurchaseStatus: LiveData<CrudStatus>
+    private val mFinishPurchaseStatus = MutableLiveData<UIStatus<Nothing>>()
+    val finishPurchaseStatus: LiveData<UIStatus<Nothing>>
         get() = mFinishPurchaseStatus
 
     private val mUpdateTotalPurchase = MutableLiveData<String>()
@@ -70,7 +69,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     fun loadPurchase() {
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                mLoadPurchaseStatus.value = LoadPurchaseStatus.Loading
+                mLoadPurchaseStatus.value = UIStatus.Loading
 
                 listProduct = productUseCase.getLocalProducts()
 
@@ -78,9 +77,9 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
 
                 getTotalPurchase()
 
-                mLoadPurchaseStatus.value = LoadPurchaseStatus.Success(listPurchase)
+                mLoadPurchaseStatus.value = UIStatus.Success(listPurchase)
             } catch (error: Throwable) {
-                mLoadPurchaseStatus.value = LoadPurchaseStatus.Error(error)
+                mLoadPurchaseStatus.value = UIStatus.Error(error)
             }
         }
     }
@@ -113,7 +112,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     fun finishPurchase() {
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                mFinishPurchaseStatus.value = CrudStatus.Loading
+                mFinishPurchaseStatus.value = UIStatus.Loading
 
                 crudEventType = C_CRUD_EVENT_PURCHASE_UPDATE
 
@@ -122,14 +121,14 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
                     val finishedPurchase = purchaseUseCase.finishPurchase(purchase)
                     purchaseInProgress = finishedPurchase
 
-                    mFinishPurchaseStatus.value = CrudStatus.Success
+                    mFinishPurchaseStatus.value = UIStatus.Success(null)
                 } ?: run {
                     val msg = context.getString(R.string.frag_purchase_in_progress_invalid_purchase)
-                    mFinishPurchaseStatus.value = CrudStatus.Error(Exception(msg))
+                    mFinishPurchaseStatus.value = UIStatus.Error(Exception(msg))
                 }
 
             } catch (error: Throwable) {
-                mFinishPurchaseStatus.value = CrudStatus.Error(error)
+                mFinishPurchaseStatus.value = UIStatus.Error(error)
             }
         }
     }
@@ -137,13 +136,13 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     fun updateItemPurchase(itemPurchase: ItemPurchase) {
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                mUpdateItemPurchaseStatus.value = CrudStatus.Loading
+                mUpdateItemPurchaseStatus.value = UIStatus.Loading
 
                 handleUpdateOrDeleteItemPurchase(itemPurchase)
 
-                mUpdateItemPurchaseStatus.value = CrudStatus.Success
+                mUpdateItemPurchaseStatus.value = UIStatus.Success(null)
             } catch (error: Throwable) {
-                mUpdateItemPurchaseStatus.value = CrudStatus.Error(error)
+                mUpdateItemPurchaseStatus.value = UIStatus.Error(error)
             }
         }
     }
@@ -151,13 +150,13 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     fun deleteItemPurchase(itemPurchase: ItemPurchase) {
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                mDeleteItemPurchaseStatus.value = CrudStatus.Loading
+                mDeleteItemPurchaseStatus.value = UIStatus.Loading
 
                 handleDeleteItemPurchase(itemPurchase)
 
-                mDeleteItemPurchaseStatus.value = CrudStatus.Success
+                mDeleteItemPurchaseStatus.value = UIStatus.Success(null)
             } catch (error: Throwable) {
-                mDeleteItemPurchaseStatus.value = CrudStatus.Error(error)
+                mDeleteItemPurchaseStatus.value = UIStatus.Error(error)
             }
         }
     }

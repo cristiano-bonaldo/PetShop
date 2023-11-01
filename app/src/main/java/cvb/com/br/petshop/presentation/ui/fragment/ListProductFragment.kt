@@ -8,12 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cvb.com.br.petshop.R
-import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.databinding.FragmentListProductBinding
+import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.presentation.ui.adapter.ProductAdapter
-import cvb.com.br.petshop.util.DialogUtil
 import cvb.com.br.petshop.presentation.viewmodel.FragListProductViewModel
-import cvb.com.br.petshop.presentation.viewmodel.status.LoadProductStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
+import cvb.com.br.petshop.util.DialogUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -81,13 +81,13 @@ class ListProductFragment : Fragment(R.layout.fragment_list_product) {
         binding.vgLoad.visibility = if (isLoading) { View.VISIBLE } else { View.GONE }
     }
 
-    private fun onLoadProductStatus(loadProductStatus: LoadProductStatus) {
+    private fun onLoadProductStatus(loadProductStatus: UIStatus<List<Product>>) {
         when (loadProductStatus) {
-            is LoadProductStatus.Loading -> {
+            is UIStatus.Loading -> {
                 Log.i(TAG, "onLoadProductStatus::Status=Loading")
             }
 
-            is LoadProductStatus.Error -> {
+            is UIStatus.Error -> {
                 val errorMessage = loadProductStatus.error.message ?: "-"
                 Log.i(TAG, "onLoadProductStatus::Status=Error Message: $errorMessage")
 
@@ -96,10 +96,10 @@ class ListProductFragment : Fragment(R.layout.fragment_list_product) {
                 dialogUtil.showErrorRetryDialog(errorMessage, btRetry, btCancel)
             }
 
-            is LoadProductStatus.Success -> {
+            is UIStatus.Success -> {
                 Log.i(TAG, "onLoadProductStatus::Status=Success")
 
-                val listProduct = loadProductStatus.listProduct
+                val listProduct = loadProductStatus.result
                 productAdapter.submitList(listProduct)
             }
         }

@@ -9,15 +9,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.RequestManager
 import cvb.com.br.petshop.R
+import cvb.com.br.petshop.databinding.FragmentProductDetailBinding
 import cvb.com.br.petshop.domain.model.ItemPurchase
 import cvb.com.br.petshop.domain.model.Product
-import cvb.com.br.petshop.databinding.FragmentProductDetailBinding
+import cvb.com.br.petshop.presentation.viewmodel.FragProductDetailViewModel
+import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
 import cvb.com.br.petshop.util.DialogUtil
 import cvb.com.br.petshop.util.InformProductQuantity
 import cvb.com.br.petshop.util.StringUtil
-import cvb.com.br.petshop.presentation.viewmodel.FragProductDetailViewModel
-import cvb.com.br.petshop.presentation.viewmodel.status.CrudStatus
-import cvb.com.br.petshop.presentation.viewmodel.status.LoadItemPurchaseStatus
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -93,23 +92,23 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         viewModel.totalPurchase.observe(viewLifecycleOwner, this::configTotalPurchase)
     }
 
-    private fun onLoadItemPurchaseStatus(loadItemPurchaseStatus: LoadItemPurchaseStatus) {
-        when (loadItemPurchaseStatus) {
-            is LoadItemPurchaseStatus.Loading -> {
+    private fun onLoadItemPurchaseStatus(uiStatus: UIStatus<ItemPurchase>) {
+        when (uiStatus) {
+            is UIStatus.Loading -> {
                 Log.i(TAG, "onLoadItemPurchaseStatus::Status=Loading")
             }
 
-            is LoadItemPurchaseStatus.Error -> {
-                val errorMessage = loadItemPurchaseStatus.error.message ?: "-"
+            is UIStatus.Error -> {
+                val errorMessage = uiStatus.error.message ?: "-"
                 Log.i(TAG, "onLoadItemPurchaseStatus::Status=Error Message: $errorMessage")
 
                 handleLoadItemPurchaseError(errorMessage)
             }
 
-            is LoadItemPurchaseStatus.Success -> {
+            is UIStatus.Success -> {
                 Log.i(TAG, "onLoadItemPurchaseStatus::Status=Success")
 
-                val itemPurchase = loadItemPurchaseStatus.itemPurchase
+                val itemPurchase = uiStatus.result
                 setItemPurchaseInfo(itemPurchase)
             }
         }
@@ -120,20 +119,20 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         dialogUtil.showErrorRetryDialog(errorMessage, btRetry)
     }
 
-    private fun onAddPurchaseStatus(crudStatus: CrudStatus) {
-        when (crudStatus) {
-            is CrudStatus.Loading -> {
+    private fun onAddPurchaseStatus(uiStatus: UIStatus<Nothing>) {
+        when (uiStatus) {
+            is UIStatus.Loading -> {
                 Log.i(TAG, "onAddPurchaseStatus::Status=Loading")
             }
 
-            is CrudStatus.Error -> {
-                val errorMessage = crudStatus.error.message ?: "-"
+            is UIStatus.Error -> {
+                val errorMessage = uiStatus.error.message ?: "-"
                 Log.i(TAG, "onAddPurchaseStatus::Status=Error Message: $errorMessage")
 
                 handleCrudError(errorMessage)
             }
 
-            is CrudStatus.Success -> {
+            is UIStatus.Success -> {
                 Log.i(TAG, "onAddPurchaseStatus::Status=Success")
 
                 findNavController().popBackStack()

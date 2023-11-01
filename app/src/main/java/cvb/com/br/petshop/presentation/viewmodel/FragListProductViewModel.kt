@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.viewModelScope
 import cvb.com.br.petshop.di.MainDispatcher
+import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.domain.usecase.ProductUseCase
-import cvb.com.br.petshop.presentation.viewmodel.status.LoadProductStatus
+import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -20,8 +21,8 @@ class FragListProductViewModel @Inject constructor(
     private val productUseCase: ProductUseCase
 ) : ViewModel() {
 
-    private val mLoadProductStatus = MutableLiveData<LoadProductStatus>()
-    val loadProductStatus: LiveData<LoadProductStatus>
+    private val mLoadProductStatus = MutableLiveData<UIStatus<List<Product>>>()
+    val loadProductStatus: LiveData<UIStatus<List<Product>>>
         get() = mLoadProductStatus
 
     private val mIsLoading = MediatorLiveData<Boolean>()
@@ -36,13 +37,13 @@ class FragListProductViewModel @Inject constructor(
     fun loadProducts() {
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                mLoadProductStatus.value = LoadProductStatus.Loading
+                mLoadProductStatus.value = UIStatus.Loading
 
                 val productList = productUseCase.loadProducts()
 
-                mLoadProductStatus.value = LoadProductStatus.Success(productList)
+                mLoadProductStatus.value = UIStatus.Success(productList)
             } catch (error: Throwable) {
-                mLoadProductStatus.value = LoadProductStatus.Error(error)
+                mLoadProductStatus.value = UIStatus.Error(error)
             }
         }
     }
@@ -52,6 +53,6 @@ class FragListProductViewModel @Inject constructor(
     }
 
     private fun isLoading(): Boolean {
-        return mLoadProductStatus.value is LoadProductStatus.Loading
+        return mLoadProductStatus.value is UIStatus.Loading
     }
 }
