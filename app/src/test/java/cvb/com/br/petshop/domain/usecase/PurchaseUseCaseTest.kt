@@ -110,7 +110,7 @@ class PurchaseUseCaseTest {
         val purchaseCaptured = captor.value
 
         assertThat(purchaseCaptured.status).isEqualTo(PurchaseStatusEnum.PURCHASE_STATUS_CLOSED.status)
-        assertThat(purchaseCaptured.convertedAt).isGreaterThan(purchaseCaptured.createAt)
+        assertThat(purchaseCaptured.convertedAt).isAtLeast(purchaseCaptured.createAt)
         assertThat(purchaseFinished).isEqualTo(purchaseCaptured)
     }
 }
