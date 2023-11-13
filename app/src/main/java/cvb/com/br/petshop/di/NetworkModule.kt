@@ -1,7 +1,11 @@
 package cvb.com.br.petshop.di
 
+import cvb.com.br.petshop.data.datasource.local.LocalProductDataSource
+import cvb.com.br.petshop.data.datasource.remote.RemoteProductDataSource
+import cvb.com.br.petshop.data.db.dao.ProductDao
 import cvb.com.br.petshop.data.network.interceptor.ApiInterceptor
 import cvb.com.br.petshop.data.network.service.ApiService
+import cvb.com.br.petshop.domain.datasource.ProductDataSource
 import cvb.com.br.petshop.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -11,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -47,4 +52,15 @@ object NetworkModule {
     @Singleton
     fun provideApiInterface(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
+
+    @ProductRemoteDataSource
+    @Singleton
+    @Provides
+    fun providesProductRemoteDataSource(apiService: ApiService): ProductDataSource =
+        RemoteProductDataSource(apiService)
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ProductRemoteDataSource
+

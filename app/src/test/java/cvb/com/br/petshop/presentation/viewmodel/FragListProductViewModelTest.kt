@@ -2,11 +2,11 @@ package cvb.com.br.petshop.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import cvb.com.br.petshop.data.repository.ProductRepositoryFake
+import cvb.com.br.petshop.data.repository.fake.ProductRepositoryFake
 import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.domain.usecase.ProductUseCase
 import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
-import cvb.com.br.petshop.presentation.viewmodel.util.getOrAwaitValue
+import cvb.com.br.petshop.util.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle

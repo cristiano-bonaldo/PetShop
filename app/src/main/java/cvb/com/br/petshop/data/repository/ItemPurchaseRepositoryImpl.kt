@@ -1,29 +1,33 @@
 package cvb.com.br.petshop.data.repository
 
-import cvb.com.br.petshop.data.datasource.local.LocalItemPurchaseDataSource
+import cvb.com.br.petshop.domain.datasource.ItemPurchaseDataSource
 import cvb.com.br.petshop.domain.model.ItemPurchase
 import cvb.com.br.petshop.domain.repository.ItemPurchaseRepository
 import javax.inject.Inject
 
-class ItemPurchaseRepositoryImpl @Inject constructor(private val localItemPurchaseDataSource: LocalItemPurchaseDataSource) :
+class ItemPurchaseRepositoryImpl @Inject constructor(private val itemPurchaseDataSource: ItemPurchaseDataSource) :
     ItemPurchaseRepository {
 
     override suspend fun insert(itemPurchase: ItemPurchase) {
-        localItemPurchaseDataSource.insert(itemPurchase)
+        itemPurchaseDataSource.insert(itemPurchase)
     }
 
     override suspend fun delete(itemPurchase: ItemPurchase) {
-        localItemPurchaseDataSource.delete(itemPurchase)
+        itemPurchaseDataSource.delete(itemPurchase)
     }
+
     override suspend fun update(itemPurchase: ItemPurchase) {
-        localItemPurchaseDataSource.update(itemPurchase)
+        itemPurchaseDataSource.update(itemPurchase)
     }
 
     override suspend fun getItemsByPurchase(purchaseId: Long): List<ItemPurchase> {
-        return localItemPurchaseDataSource.getItemsByPurchase(purchaseId)
+        return itemPurchaseDataSource.getItemsByPurchase(purchaseId)
     }
 
-    override suspend fun getItemByPurchaseAndProduct(purchaseId: Long, prodId: Long): ItemPurchase? {
-        return localItemPurchaseDataSource.getItemByPurchaseAndProduct(purchaseId, prodId)
+    override suspend fun getItemByPurchaseAndProduct(
+        purchaseId: Long,
+        prodId: Long
+    ): ItemPurchase? {
+        return itemPurchaseDataSource.getItemByPurchaseAndProduct(purchaseId, prodId)
     }
 }

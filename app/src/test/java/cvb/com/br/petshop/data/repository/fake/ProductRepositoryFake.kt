@@ -1,4 +1,4 @@
-package cvb.com.br.petshop.data.repository
+package cvb.com.br.petshop.data.repository.fake
 
 import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.domain.repository.ProductRepository
@@ -8,12 +8,6 @@ class ProductRepositoryFake : ProductRepository {
 
     fun enableError() {
         isError = true
-    }
-
-    override suspend fun insert(product: Product) {
-        if (isError) {
-            throw Throwable("ProductDataSource ERROR")
-        }
     }
 
     override suspend fun getProducts(): List<Product> {

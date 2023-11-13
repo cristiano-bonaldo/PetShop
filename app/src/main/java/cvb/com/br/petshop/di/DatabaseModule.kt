@@ -13,6 +13,7 @@ import cvb.com.br.petshop.data.db.dao.PurchaseDao
 import cvb.com.br.petshop.data.repository.ItemPurchaseRepositoryImpl
 import cvb.com.br.petshop.data.repository.ProductRepositoryImpl
 import cvb.com.br.petshop.data.repository.PurchaseRepositoryImpl
+import cvb.com.br.petshop.domain.datasource.ProductDataSource
 import cvb.com.br.petshop.domain.repository.ItemPurchaseRepository
 import cvb.com.br.petshop.domain.repository.ProductRepository
 import cvb.com.br.petshop.domain.repository.PurchaseRepository
@@ -57,6 +58,14 @@ object DatabaseModule {
 
     //==============
 
+    @ProductLocalDataSource
+    @Singleton
+    @Provides
+    fun providesProductLocalDataSource(productDao: ProductDao): ProductDataSource =
+        LocalProductDataSource(productDao)
+
+    //==============
+
     @ProductRepositoryImplementation
     @Singleton
     @Provides
@@ -78,6 +87,10 @@ object DatabaseModule {
     fun providesItemPurchaseRepositoryImpl(localItemPurchaseDataSource: LocalItemPurchaseDataSource): ItemPurchaseRepository =
         ItemPurchaseRepositoryImpl(localItemPurchaseDataSource)
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ProductLocalDataSource
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

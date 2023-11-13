@@ -10,12 +10,6 @@ class ProductRepositoryFake : ProductRepository {
         isError = true
     }
 
-    override suspend fun insert(product: Product) {
-        if (isError) {
-            throw Throwable("ProductDataSource ERROR")
-        }
-    }
-
     override suspend fun getProducts(): List<Product> {
         if (isError) {
             throw Throwable("ProductDataSource ERROR")

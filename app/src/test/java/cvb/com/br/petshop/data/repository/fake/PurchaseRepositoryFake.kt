@@ -1,4 +1,4 @@
-package cvb.com.br.petshop.data.repository
+package cvb.com.br.petshop.data.repository.fake
 
 import cvb.com.br.petshop.domain.model.Purchase
 import cvb.com.br.petshop.domain.repository.PurchaseRepository
