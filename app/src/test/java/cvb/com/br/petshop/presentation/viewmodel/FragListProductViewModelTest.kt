@@ -6,21 +6,22 @@ import cvb.com.br.petshop.data.repository.fake.ProductRepositoryFake
 import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.domain.usecase.ProductUseCase
 import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
+import cvb.com.br.petshop.util.MainDispatcherRule
 import cvb.com.br.petshop.util.getOrAwaitValue
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class FragListProductViewModelTest {
 
     // Run on the Main Thread
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var viewModel: FragListProductViewModel
 
@@ -35,7 +36,7 @@ class FragListProductViewModelTest {
         productUseCase = ProductUseCase(productRepository)
 
         viewModel = FragListProductViewModel(
-            UnconfinedTestDispatcher(),
+            Dispatchers.Default,
             productUseCase
         )
     }
@@ -43,7 +44,6 @@ class FragListProductViewModelTest {
     @Test
     fun loadProductState_Success() = runTest {
         viewModel.loadProducts()
-        advanceUntilIdle()
 
         val loadProductStatus = viewModel.loadProductStatus.getOrAwaitValue()
 
@@ -59,7 +59,6 @@ class FragListProductViewModelTest {
         }
 
         viewModel.loadProducts()
-        advanceUntilIdle()
 
         assertThat(listProductStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         assertThat(listProductStatus[1]).isInstanceOf(UIStatus.Success::class.java)
@@ -75,7 +74,6 @@ class FragListProductViewModelTest {
         }
 
         viewModel.loadProducts()
-        advanceUntilIdle()
 
         assertThat(listProductStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         assertThat(listProductStatus[1]).isInstanceOf(UIStatus.Error::class.java)
@@ -89,7 +87,6 @@ class FragListProductViewModelTest {
         }
 
         viewModel.loadProducts()
-        advanceUntilIdle()
 
         assertThat(isLoadingStatus[0]).isTrue()
         assertThat(isLoadingStatus[1]).isFalse()
@@ -105,7 +102,6 @@ class FragListProductViewModelTest {
         }
 
         viewModel.loadProducts()
-        advanceUntilIdle()
 
         assertThat(isLoadingStatus[0]).isTrue()
         assertThat(isLoadingStatus[1]).isFalse()

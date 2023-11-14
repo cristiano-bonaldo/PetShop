@@ -1,4 +1,4 @@
-package cvb.com.br.petshop.presentation.util
+package cvb.com.br.petshop.util
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData

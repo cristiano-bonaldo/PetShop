@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cvb.com.br.petshop.R
+import cvb.com.br.petshop.di.DefaultDispatcher
 import cvb.com.br.petshop.di.MainDispatcher
 import cvb.com.br.petshop.domain.model.ItemPurchase
 import cvb.com.br.petshop.domain.model.Product
@@ -25,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FragListPurchaseInProgressViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    @MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val productUseCase: ProductUseCase,
     private val purchaseUseCase: PurchaseUseCase,
     private val itemPurchaseUseCase: ItemPurchaseUseCase,
@@ -67,7 +68,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
         get() = mUpdateTotalPurchase
 
     fun loadPurchase() {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch {
             try {
                 mLoadPurchaseStatus.value = UIStatus.Loading
 
@@ -110,7 +111,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     }
 
     fun finishPurchase() {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch {
             try {
                 mFinishPurchaseStatus.value = UIStatus.Loading
 
@@ -134,7 +135,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     }
 
     fun updateItemPurchase(itemPurchase: ItemPurchase) {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch {
             try {
                 mUpdateItemPurchaseStatus.value = UIStatus.Loading
 
@@ -148,7 +149,7 @@ class FragListPurchaseInProgressViewModel @Inject constructor(
     }
 
     fun deleteItemPurchase(itemPurchase: ItemPurchase) {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch {
             try {
                 mDeleteItemPurchaseStatus.value = UIStatus.Loading
 

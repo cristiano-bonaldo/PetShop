@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cvb.com.br.petshop.di.DefaultDispatcher
 import cvb.com.br.petshop.di.MainDispatcher
 import cvb.com.br.petshop.domain.model.ItemPurchase
 import cvb.com.br.petshop.domain.model.Product
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragProductDetailViewModel @Inject constructor(
-    @MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val purchaseUseCase: PurchaseUseCase,
     private val itemPurchaseUseCase: ItemPurchaseUseCase,
 ) : ViewModel() {
@@ -43,7 +44,7 @@ class FragProductDetailViewModel @Inject constructor(
         get() = mTotalPurchase
 
     fun loadItemPurchase(product: Product) {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch {
             try {
                 mLoadItemPurchaseStatus.value = UIStatus.Loading
 
@@ -68,7 +69,7 @@ class FragProductDetailViewModel @Inject constructor(
     }
 
     fun addItemPurchase(product: Product, quantityRequested: Int) {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch {
             try {
                 mAddPurchaseStatus.value = UIStatus.Loading
 

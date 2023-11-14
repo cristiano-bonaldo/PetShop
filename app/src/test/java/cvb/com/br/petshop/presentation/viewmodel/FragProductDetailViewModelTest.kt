@@ -9,21 +9,23 @@ import cvb.com.br.petshop.domain.model.ItemPurchase
 import cvb.com.br.petshop.domain.usecase.ItemPurchaseUseCase
 import cvb.com.br.petshop.domain.usecase.PurchaseUseCase
 import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
+import cvb.com.br.petshop.util.MainDispatcherRule
 import cvb.com.br.petshop.util.getOrAwaitValue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class FragProductDetailViewModelTest {
 
     // Run on the Main Thread
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var viewModel: FragProductDetailViewModel
 
@@ -46,7 +48,7 @@ class FragProductDetailViewModelTest {
         )
 
         viewModel = FragProductDetailViewModel(
-            UnconfinedTestDispatcher(),
+            Dispatchers.Default,
             purchaseUseCase,
             itemPurchaseUseCase
         )
@@ -57,7 +59,6 @@ class FragProductDetailViewModelTest {
         val product = ProductFactory.createProduct(1)
 
         viewModel.loadItemPurchase(product)
-        advanceUntilIdle()
 
         val status = viewModel.loadItemPurchaseStatus.getOrAwaitValue()
 
@@ -74,7 +75,6 @@ class FragProductDetailViewModelTest {
         val product = ProductFactory.createProduct(1)
 
         viewModel.loadItemPurchase(product)
-        advanceUntilIdle()
 
         assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         assertThat(listStatus[1]).isInstanceOf(UIStatus.Success::class.java)
@@ -92,7 +92,6 @@ class FragProductDetailViewModelTest {
         val product = ProductFactory.createProduct(1)
 
         viewModel.loadItemPurchase(product)
-        advanceUntilIdle()
 
         assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         assertThat(listStatus[1]).isInstanceOf(UIStatus.Error::class.java)
@@ -104,7 +103,6 @@ class FragProductDetailViewModelTest {
         val qtd = 1
 
         viewModel.addItemPurchase(product, qtd)
-        advanceUntilIdle()
 
         val status = viewModel.addPurchaseStatus.getOrAwaitValue()
 
@@ -122,7 +120,6 @@ class FragProductDetailViewModelTest {
         val qtd = 1
 
         viewModel.addItemPurchase(product, qtd)
-        advanceUntilIdle()
 
         assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         assertThat(listStatus[1]).isInstanceOf(UIStatus.Success::class.java)
@@ -141,7 +138,6 @@ class FragProductDetailViewModelTest {
         val qtd = 1
 
         viewModel.addItemPurchase(product, qtd)
-        advanceUntilIdle()
 
         assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         assertThat(listStatus[1]).isInstanceOf(UIStatus.Error::class.java)

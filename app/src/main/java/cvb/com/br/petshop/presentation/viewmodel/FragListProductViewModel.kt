@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.viewModelScope
+import cvb.com.br.petshop.di.DefaultDispatcher
 import cvb.com.br.petshop.di.MainDispatcher
 import cvb.com.br.petshop.domain.model.Product
 import cvb.com.br.petshop.domain.usecase.ProductUseCase
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragListProductViewModel @Inject constructor(
-    @MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val productUseCase: ProductUseCase
 ) : ViewModel() {
 
@@ -35,7 +36,7 @@ class FragListProductViewModel @Inject constructor(
     }
 
     fun loadProducts() {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch {
             try {
                 mLoadProductStatus.value = UIStatus.Loading
 

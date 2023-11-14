@@ -11,9 +11,11 @@ import cvb.com.br.petshop.domain.model.Purchase
 import cvb.com.br.petshop.domain.usecase.ItemPurchaseUseCase
 import cvb.com.br.petshop.domain.usecase.ProductUseCase
 import cvb.com.br.petshop.domain.usecase.PurchaseUseCase
-import cvb.com.br.petshop.presentation.util.getOrAwaitValue
+import cvb.com.br.petshop.util.getOrAwaitValue
 import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
+import cvb.com.br.petshop.util.MainDispatcherRule
 import cvb.com.br.petshop.util.PurchaseUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -29,6 +31,9 @@ class FragListPurchaseInProgressViewModelTest {
     // Run on the Main Thread
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var viewModel: FragListPurchaseInProgressViewModel
 
@@ -56,7 +61,7 @@ class FragListPurchaseInProgressViewModelTest {
 
         viewModel = FragListPurchaseInProgressViewModel(
             ApplicationProvider.getApplicationContext(),
-            UnconfinedTestDispatcher(),
+            Dispatchers.Default,
             productUseCase,
             purchaseUseCase,
             itemPurchaseUseCase,
