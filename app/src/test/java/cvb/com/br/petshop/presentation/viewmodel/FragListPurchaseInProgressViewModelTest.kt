@@ -1,31 +1,31 @@
 package cvb.com.br.petshop.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth
-import cvb.com.br.petshop.data.model.util.ItemPurchaseFactory
-import cvb.com.br.petshop.data.repository.ItemPurchaseRepositoryFake
-import cvb.com.br.petshop.data.repository.ProductRepositoryFake
-import cvb.com.br.petshop.data.repository.PurchaseRepositoryFake
+import cvb.com.br.petshop.PetShopApplication
+import cvb.com.br.petshop.data.repository.fake.ItemPurchaseRepositoryFake
+import cvb.com.br.petshop.data.repository.fake.ProductRepositoryFake
+import cvb.com.br.petshop.data.repository.fake.PurchaseRepositoryFake
+import cvb.com.br.petshop.data.util.ItemPurchaseFactory
 import cvb.com.br.petshop.domain.model.Purchase
 import cvb.com.br.petshop.domain.usecase.ItemPurchaseUseCase
 import cvb.com.br.petshop.domain.usecase.ProductUseCase
 import cvb.com.br.petshop.domain.usecase.PurchaseUseCase
-import cvb.com.br.petshop.util.getOrAwaitValue
 import cvb.com.br.petshop.presentation.viewmodel.status.UIStatus
 import cvb.com.br.petshop.util.MainDispatcherRule
 import cvb.com.br.petshop.util.PurchaseUtil
+import cvb.com.br.petshop.util.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(AndroidJUnit4::class)
 class FragListPurchaseInProgressViewModelTest {
 
     // Run on the Main Thread
@@ -45,7 +45,6 @@ class FragListPurchaseInProgressViewModelTest {
     private lateinit var purchaseUseCase: PurchaseUseCase
     private lateinit var itemPurchaseUseCase: ItemPurchaseUseCase
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setup() {
         productRepositoryFake = ProductRepositoryFake()
@@ -57,10 +56,12 @@ class FragListPurchaseInProgressViewModelTest {
         itemPurchaseRepositoryFake = ItemPurchaseRepositoryFake()
         itemPurchaseUseCase = ItemPurchaseUseCase(itemPurchaseRepositoryFake)
 
-        val purchaseUtil = PurchaseUtil(ApplicationProvider.getApplicationContext())
+        val app = getApplicationContext<PetShopApplication>()
+
+        val purchaseUtil = PurchaseUtil(app)
 
         viewModel = FragListPurchaseInProgressViewModel(
-            ApplicationProvider.getApplicationContext(),
+            app,
             Dispatchers.Default,
             productUseCase,
             purchaseUseCase,
@@ -72,7 +73,6 @@ class FragListPurchaseInProgressViewModelTest {
     @Test
     fun loadPurchaseState_Success() = runTest {
         viewModel.loadPurchase()
-        advanceUntilIdle()
 
         val status = viewModel.loadPurchaseStatus.getOrAwaitValue()
 
@@ -87,7 +87,6 @@ class FragListPurchaseInProgressViewModelTest {
         }
 
         viewModel.loadPurchase()
-        advanceUntilIdle()
 
         Truth.assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         Truth.assertThat(listStatus[1]).isInstanceOf(UIStatus.Success::class.java)
@@ -103,7 +102,6 @@ class FragListPurchaseInProgressViewModelTest {
         }
 
         viewModel.loadPurchase()
-        advanceUntilIdle()
 
         Truth.assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         Truth.assertThat(listStatus[1]).isInstanceOf(UIStatus.Error::class.java)
@@ -114,7 +112,6 @@ class FragListPurchaseInProgressViewModelTest {
         val itemPurchase = ItemPurchaseFactory.createItemPurchase(1, 1)
 
         viewModel.updateItemPurchase(itemPurchase)
-        advanceUntilIdle()
 
         val status = viewModel.updateItemPurchaseStatus.getOrAwaitValue()
 
@@ -131,7 +128,6 @@ class FragListPurchaseInProgressViewModelTest {
         val itemPurchase = ItemPurchaseFactory.createItemPurchase(1, 1)
 
         viewModel.updateItemPurchase(itemPurchase)
-        advanceUntilIdle()
 
         Truth.assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         Truth.assertThat(listStatus[1]).isInstanceOf(UIStatus.Success::class.java)
@@ -149,7 +145,6 @@ class FragListPurchaseInProgressViewModelTest {
         val itemPurchase = ItemPurchaseFactory.createItemPurchase(1, 1)
 
         viewModel.updateItemPurchase(itemPurchase)
-        advanceUntilIdle()
 
         Truth.assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         Truth.assertThat(listStatus[1]).isInstanceOf(UIStatus.Error::class.java)
@@ -160,7 +155,6 @@ class FragListPurchaseInProgressViewModelTest {
         val itemPurchase = ItemPurchaseFactory.createItemPurchase(1, 1)
 
         viewModel.deleteItemPurchase(itemPurchase)
-        advanceUntilIdle()
 
         val status = viewModel.deleteItemPurchaseStatus.getOrAwaitValue()
 
@@ -177,7 +171,6 @@ class FragListPurchaseInProgressViewModelTest {
         val itemPurchase = ItemPurchaseFactory.createItemPurchase(1, 1)
 
         viewModel.deleteItemPurchase(itemPurchase)
-        advanceUntilIdle()
 
         Truth.assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         Truth.assertThat(listStatus[1]).isInstanceOf(UIStatus.Success::class.java)
@@ -195,7 +188,6 @@ class FragListPurchaseInProgressViewModelTest {
         val itemPurchase = ItemPurchaseFactory.createItemPurchase(1, 1)
 
         viewModel.deleteItemPurchase(itemPurchase)
-        advanceUntilIdle()
 
         Truth.assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         Truth.assertThat(listStatus[1]).isInstanceOf(UIStatus.Error::class.java)
@@ -204,7 +196,6 @@ class FragListPurchaseInProgressViewModelTest {
     @Test
     fun finishPurchaseStatus_Error() = runTest {
         viewModel.finishPurchase()
-        advanceUntilIdle()
 
         val status = viewModel.finishPurchaseStatus.getOrAwaitValue()
 
@@ -219,7 +210,6 @@ class FragListPurchaseInProgressViewModelTest {
         }
 
         viewModel.finishPurchase()
-        advanceUntilIdle()
 
         Truth.assertThat(listStatus[0]).isInstanceOf(UIStatus.Loading::class.java)
         Truth.assertThat(listStatus[1]).isInstanceOf(UIStatus.Error::class.java)
